@@ -1,15 +1,15 @@
 package br.dev.joaquim.StudentApp.ihm;
 
 import java.util.Scanner;
-
 import br.dev.joaquim.StudentApp.dao.H2CursoDAO;
+import br.dev.joaquim.StudentApp.entities.Curso;
 
 public class CursoIHM {
 
-    private H2CursoDAO cd;
+    private H2CursoDAO cursoDAO;
 
-    public CursoIHM(H2CursoDAO cd) {
-        this.cd = cd;
+    public CursoIHM(H2CursoDAO cursoDAO) {
+        this.cursoDAO = cursoDAO;
     }
 
     public void start() {
@@ -21,7 +21,7 @@ public class CursoIHM {
             System.out.println("1. Add Curso");
             System.out.println("2. View All Cursos");
             System.out.println("3. Update Curso");
-            System.out.println("4. Delete Cu");
+            System.out.println("4. Delete Curso");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
             option = scanner.nextInt();
@@ -29,74 +29,81 @@ public class CursoIHM {
 
             switch (option) {
                 case 1:
-                    addStudent(scanner);
+                    addCurso(scanner);
                     break;
                 case 2:
-                    viewAllStudents();
+                    viewAllCursos();
                     break;
                 case 3:
-                    updateStudent(scanner);
+                    updateCurso(scanner);
                     break;
                 case 4:
-                    deleteStudent(scanner);
+                    deleteCurso(scanner);
                     break;
                 case 0:
-                    System.out.println("Exiting...");
+                    System.out.println("Saíndo...");
                     break;
                 default:
-                    System.out.println("Invalid option. Try again.");
+                    System.out.println("Opção Inválida.");
             }
         }
 
         scanner.close();
     }
 
-    private void addStudent(Scanner scanner) {
-        System.out.print("Enter student name: ");
-        String name = scanner.nextLine();
-        System.out.print("Enter student RA: ");
-        int ra = scanner.nextInt();
+    private void addCurso(Scanner scanner) {
+        System.out.print("Enter curso code: ");
+        int cod = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        System.out.print("Enter curso name: ");
+        String nome = scanner.nextLine();
+        System.out.print("Enter professor's name: ");
+        String nomeProfessor = scanner.nextLine();
+        System.out.print("Enter period: ");
+        String periodo = scanner.nextLine();
 
-        Student student = new Student();
-        student.setName(name);
-        student.setRa(ra);
-
-        studentDAO.create(student);
-        System.out.println("Student added successfully.");
+        Curso curso = new Curso(cod, nome, nomeProfessor, periodo);
+        cursoDAO.create(curso);
+        System.out.println("Curso added successfully.");
     }
 
-    private void viewAllStudents() {
-        System.out.println("=== List of Students ===");
-        for (Student student : studentDAO.findAll()) {
-            System.out.println(student);
+    private void viewAllCursos() {
+        System.out.println("=== List of Cursos ===");
+        for (Curso curso : cursoDAO.findAll()) {
+            System.out.println(curso);
         }
     }
 
-    private void updateStudent(Scanner scanner) {
-        System.out.print("Enter student RA to update: ");
-        int ra = scanner.nextInt();
+    private void updateCurso(Scanner scanner) {
+        System.out.print("Enter curso code to update: ");
+        int cod = scanner.nextInt();
         scanner.nextLine(); // Consume newline
 
-        Student student = studentDAO.findByRa(ra);
-        if (student == null) {
-            System.out.println("Student not found.");
+        Curso curso = cursoDAO.findByCod(cod);
+        if (curso == null) {
+            System.out.println("Curso not found.");
             return;
         }
 
         System.out.print("Enter new name: ");
-        String name = scanner.nextLine();
+        String nome = scanner.nextLine();
+        System.out.print("Enter new professor's name: ");
+        String nomeProfessor = scanner.nextLine();
+        System.out.print("Enter new period: ");
+        String periodo = scanner.nextLine();
 
-        student.setName(name);
+        curso.setNome(nome);
+        curso.setNomeProfessor(nomeProfessor);
+        curso.setPeriodo(periodo);
 
-        studentDAO.update(student);
-        System.out.println("Student updated successfully.");
+        cursoDAO.update(curso);
+        System.out.println("Curso updated successfully.");
     }
 
-    private void deleteStudent(Scanner scanner) {
-        System.out.print("Enter student RA to delete: ");
-        int ra = scanner.nextInt();
-        studentDAO.delete(ra);
-        System.out.println("Student deleted successfully.");
+    private void deleteCurso(Scanner scanner) {
+        System.out.print("Enter curso code to delete: ");
+        int cod = scanner.nextInt();
+        cursoDAO.delete(cod);
+        System.out.println("Curso deleted successfully.");
     }
-    
 }
