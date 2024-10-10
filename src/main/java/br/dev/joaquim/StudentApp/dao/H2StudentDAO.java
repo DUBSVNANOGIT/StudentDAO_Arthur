@@ -35,7 +35,7 @@ public class H2StudentDAO implements StudentDAO {
   private void createTableIfNotExists() {
     try {
       String sql = "CREATE TABLE IF NOT EXISTS students(" +
-          "ra INT, name VARCHAR(256), PRIMARY KEY (ra));";
+          "ra INT, name VARCHAR(256), PRIMARY KEY (ra), curso_fk FOREIGN KEY (cod) REFERENCES curso (cod));";
       PreparedStatement stmt = connection.prepareStatement(sql);
       stmt.execute();
     } catch (SQLException ex) {
