@@ -18,14 +18,14 @@ public class CursoIHM {
 
         while (option != 0) {
             System.out.println("=== Curso Menu ===");
-            System.out.println("1. Add Curso");
-            System.out.println("2. View All Cursos");
-            System.out.println("3. Update Curso");
-            System.out.println("4. Delete Curso");
-            System.out.println("0. Exit");
-            System.out.print("Choose an option: ");
+            System.out.println("1. Adicionar Curso");
+            System.out.println("2. Ver todos os Cursos");
+            System.out.println("3. Atualizar Curso");
+            System.out.println("4. Deletar Curso");
+            System.out.println("0. Sair");
+            System.out.print("Escolha uma opção: ");
             option = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine(); 
 
             switch (option) {
                 case 1:
@@ -52,44 +52,44 @@ public class CursoIHM {
     }
 
     private void addCurso(Scanner scanner) {
-        System.out.print("Enter curso code: ");
+        System.out.print("Insira o código do curso: ");
         int cod = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-        System.out.print("Enter curso name: ");
+        scanner.nextLine(); 
+        System.out.print("Insira o nome do curso: ");
         String nome = scanner.nextLine();
-        System.out.print("Enter professor's name: ");
+        System.out.print("Insira o nome do professor do curso: ");
         String nomeProfessor = scanner.nextLine();
-        System.out.print("Enter period: ");
+        System.out.print("Insira o período do curso: ");
         String periodo = scanner.nextLine();
 
         Curso curso = new Curso(cod, nome, nomeProfessor, periodo);
         cursoDAO.create(curso);
-        System.out.println("Curso added successfully.");
+        System.out.println("Curso adicionado com sucesso!");
     }
 
     private void viewAllCursos() {
-        System.out.println("=== List of Cursos ===");
+        System.out.println("=== Lista de Cursos ===");
         for (Curso curso : cursoDAO.findAll()) {
             System.out.println(curso);
         }
     }
 
     private void updateCurso(Scanner scanner) {
-        System.out.print("Enter curso code to update: ");
+        System.out.print("Informe o código do curso a ser atualizado: ");
         int cod = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine(); 
 
         Curso curso = cursoDAO.findByCod(cod);
         if (curso == null) {
-            System.out.println("Curso not found.");
+            System.out.println("Curso não encontrado.");
             return;
         }
 
-        System.out.print("Enter new name: ");
+        System.out.print("Insira o novo nome do curso: ");
         String nome = scanner.nextLine();
-        System.out.print("Enter new professor's name: ");
+        System.out.print("Insira o nome do novo professor: ");
         String nomeProfessor = scanner.nextLine();
-        System.out.print("Enter new period: ");
+        System.out.print("Insira o novo período do curso: ");
         String periodo = scanner.nextLine();
 
         curso.setNome(nome);
@@ -97,13 +97,13 @@ public class CursoIHM {
         curso.setPeriodo(periodo);
 
         cursoDAO.update(curso);
-        System.out.println("Curso updated successfully.");
+        System.out.println("Curso atualizado com sucesso.");
     }
 
     private void deleteCurso(Scanner scanner) {
-        System.out.print("Enter curso code to delete: ");
+        System.out.print("Insira o código do curso a ser deletado: ");
         int cod = scanner.nextInt();
         cursoDAO.delete(cod);
-        System.out.println("Curso deleted successfully.");
+        System.out.println("Curso deletado!");
     }
 }
