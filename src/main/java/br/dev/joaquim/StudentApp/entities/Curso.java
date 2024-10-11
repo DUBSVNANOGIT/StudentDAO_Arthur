@@ -43,4 +43,10 @@ public String getPeriodo() {
 public void setPeriodo(String periodo) {
     this.periodo = periodo;
 }
+
+@Override
+public String toString() {
+    return "Curso [cod=" + cod + ", nome=" + nome + ", nomeProfessor=" + nomeProfessor + ", periodo=" + periodo + "]";
+}
+
 }

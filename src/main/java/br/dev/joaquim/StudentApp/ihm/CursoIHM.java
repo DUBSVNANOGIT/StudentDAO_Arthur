@@ -70,7 +70,7 @@ public class CursoIHM {
     private void viewAllCursos() {
         System.out.println("=== Lista de Cursos ===");
         for (Curso curso : cursoDAO.findAll()) {
-            System.out.println(curso);
+            System.out.println(curso.toString());
         }
     }
 
@@ -79,23 +79,11 @@ public class CursoIHM {
         int cod = scanner.nextInt();
         scanner.nextLine(); 
 
-        Curso curso = cursoDAO.findByCod(cod);
+        Curso curso = cursoDAO.FindById(cod);
         if (curso == null) {
             System.out.println("Curso não encontrado.");
             return;
         }
-
-        System.out.print("Insira o novo nome do curso: ");
-        String nome = scanner.nextLine();
-        System.out.print("Insira o nome do novo professor: ");
-        String nomeProfessor = scanner.nextLine();
-        System.out.print("Insira o novo período do curso: ");
-        String periodo = scanner.nextLine();
-
-        curso.setNome(nome);
-        curso.setNomeProfessor(nomeProfessor);
-        curso.setPeriodo(periodo);
-
         cursoDAO.update(curso);
         System.out.println("Curso atualizado com sucesso.");
     }
